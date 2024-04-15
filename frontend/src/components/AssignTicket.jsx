@@ -103,8 +103,13 @@ function AssignTicket() {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button type="submit" variant="contained" color="primary" fullWidth>
+                        <Button type="submit" variant="contained" color="success" fullWidth>
                             Assign Ticket
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button variant="contained" onClick={() => navigate(`/events/${id}`)} fullWidth>
+                            Back to Event Details
                         </Button>
                     </Grid>
                 </Grid>

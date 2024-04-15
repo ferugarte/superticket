@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Paper, Typography, List, ListItem, ListItemText, Divider, Container, Button } from '@mui/material';
+import { Paper, Typography, List, ListItem, ListItemText, Divider, Container, Button, Grid } from '@mui/material';
 
 function EventDetail() {
     const { id } = useParams();
@@ -25,6 +25,16 @@ function EventDetail() {
 
         fetchEventDetails();
     }, [id]);
+
+    const deleteEvent = async () => {
+        try {
+            await axios.delete(`http://localhost:3000/api/events/${id}`);
+            navigate('/events'); // Redirect to the list of events after deletion
+        } catch (error) {
+            console.error('Failed to delete the event:', error);
+            // Optionally handle errors more visibly for the user (e.g., through a Snackbar or Alert)
+        }
+    };
 
     if (loading) return <Typography>Loading...</Typography>;
     if (error) return <Typography color="error">{error}</Typography>;
@@ -60,15 +70,32 @@ function EventDetail() {
                     </React.Fragment>
                 ))}
             </List>
-            <Button variant="contained" onClick={() => navigate('/events')} style={{ marginRight: '10px' }}>
-                Back to Event List
-            </Button>
-            <Button variant="contained" color="primary" onClick={() => navigate(`/events/${id}/tickets`)} style={{ marginRight: '10px' }}>
-                View Tickets
-            </Button>
-            <Button variant="contained" color="primary" onClick={() => navigate(`/events/${id}/assign-ticket`)}>
-                Assign Ticket
-            </Button>
+            <Grid item xs={12}>
+                <Button variant="contained" color="success" onClick={() => navigate(`/events/${id}/assign-ticket`)} style={{ marginBottom: '10px' }} fullWidth>
+                    Assign Ticket
+                </Button>
+            </Grid>
+            <Grid item xs={12}>
+                <Button variant="contained" onClick={() => navigate('/events')} style={{ marginBottom: '10px' }} fullWidth>
+                    Back to Event List
+                </Button>
+            </Grid>
+            <Grid item xs={12}>
+                <Button variant="contained" color="primary" onClick={() => navigate(`/events/${id}/tickets`)} style={{ marginBottom: '10px' }} fullWidth>
+                    View Tickets
+                </Button>
+            </Grid>
+            <Grid item xs={12} >
+                <Button
+                    variant="contained"
+                    color="error"
+                    onClick={deleteEvent}
+                    style={{ marginTop: '20px' }}
+                    fullWidth
+                >
+                    Delete Event
+                </Button>
+            </Grid>
         </Paper>
         </Container>
     );

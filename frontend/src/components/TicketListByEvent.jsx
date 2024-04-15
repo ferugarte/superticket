@@ -1,49 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Button, Typography, List, ListItem, ListItemText, Paper, Container, IconButton } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';  // Import MUI delete icon for the button
+import { Button, Typography, List, ListItem, ListItemText, Paper, IconButton, Snackbar, Alert, Container } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function TicketListByEvent() {
-    const { eventId } = useParams();  // This hooks extracts params from URL
-    const navigate = useNavigate();  // This hook is for navigation
+    const { eventId } = useParams();
+    const navigate = useNavigate();
     const [tickets, setTickets] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [openSnackbar, setOpenSnackbar] = useState(false);  // State to manage Snackbar visibility
 
-    // Fetch tickets when component mounts or eventId changes
     useEffect(() => {
-        const fetchTickets = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/api/events/${eventId}/tickets`);
-                setTickets(response.data);
-                setLoading(false);
-            } catch (err) {
-                console.error('Error fetching tickets:', err);
-                setError('Failed to load tickets');
-                setLoading(false);
-            }
-        };
-
         fetchTickets();
-    }, [eventId]);
+    }, []);
 
-    const handleBackToEventDetails = () => {
-        navigate(`/events/${eventId}`);
+    const fetchTickets = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/api/events/${eventId}/tickets`);
+            setTickets(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.log('Error fetching tickets:', error);
+            setLoading(false);
+        }
     };
 
     const deleteTicket = async (ticketId) => {
         try {
-            console.log(`Deleting the ticket with id ${ticketId}`);
             await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`);
-            setTickets(tickets.filter(ticket => ticket._id !== ticketId));  // Update state to remove deleted ticket
+            setTickets(tickets.filter(ticket => ticket._id !== ticketId));
+            setOpenSnackbar(true);  // Open the Snackbar upon successful deletion
         } catch (error) {
             console.error('Failed to delete ticket:', error);
         }
     };
 
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);  // Close the Snackbar
+    };
+
     if (loading) return <Typography>Loading tickets...</Typography>;
-    if (error) return <Typography color="error">{error}</Typography>;
 
     return (
         <Container maxWidth="sm">
@@ -67,11 +64,17 @@ function TicketListByEvent() {
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleBackToEventDetails}
+                onClick={() => navigate(`/events/${eventId}`)}
                 style={{ marginTop: '20px' }}
+                fullWidth
             >
                 Back to Event Details
             </Button>
+            <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    Ticket successfully deleted.
+                </Alert>
+            </Snackbar>
         </Paper>
         </Container>
     );

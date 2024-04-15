@@ -27,53 +27,11 @@ const Header = () => {
         <>
             <AppBar position="static">
                 <StyledToolbar>
-                    <Icon
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        onClick={toggleDrawer(true)}
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </Icon>
                     <Typography variant="h6" component={RouterLink} to="/" sx={{ flexGrow: 1, textDecoration: 'none', color: 'inherit' }}>
                         Super Ticket
                     </Typography>
                 </StyledToolbar>
             </AppBar>
-            <Drawer
-                anchor="left"
-                open={isDrawerOpen}
-                onClose={toggleDrawer(false)}
-            >
-                <List>
-                    <ListItem  component={RouterLink} to="/" onClick={toggleDrawer(false)}>
-                        <ListItemIcon><HomeIcon /></ListItemIcon>
-                        <ListItemText primary="Home" />
-                    </ListItem>
-                    <ListItem  component={RouterLink} to="/events" onClick={toggleDrawer(false)}>
-                        <ListItemIcon><EventIcon /></ListItemIcon>
-                        <ListItemText primary="Events" />
-                    </ListItem>
-                    <ListItem  component={RouterLink} to="/create-event" onClick={toggleDrawer(false)}>
-                        <ListItemIcon><CreateIcon /></ListItemIcon>
-                        <ListItemText primary="Create Event" />
-                    </ListItem>
-                    <ListItem  component={RouterLink} to="/ticket-list" onClick={toggleDrawer(false)}>
-                        <ListItemIcon><ListAltIcon /></ListItemIcon>
-                        <ListItemText primary="Ticket List" />
-                    </ListItem>
-                    <ListItem  component={RouterLink} to="/assign-ticket" onClick={toggleDrawer(false)}>
-                        <ListItemIcon><VerifiedUserIcon /></ListItemIcon>
-                        <ListItemText primary="Assign Ticket" />
-                    </ListItem>
-                    <ListItem  component={RouterLink} to="/verify-ticket" onClick={toggleDrawer(false)}>
-                        <ListItemIcon><VerifiedUserIcon /></ListItemIcon>
-                        <ListItemText primary="Verify Ticket" />
-                    </ListItem>
-                    {/* Add more navigation links as needed */}
-                </List>
-            </Drawer>
         </>
     );
 };

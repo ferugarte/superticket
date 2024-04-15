@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, TextField, Paper, Typography, Grid, IconButton, Container } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 function CreateEvent() {
+    const navigate = useNavigate();
     const [eventName, setEventName] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
@@ -156,8 +158,13 @@ function CreateEvent() {
                         </React.Fragment>
                     ))}
                     <Grid item xs={12}>
-                        <Button type="submit" variant="contained" color="primary" fullWidth>
+                        <Button type="submit" variant="contained" color="success" fullWidth>
                             Create Event
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button variant="contained" onClick={() => navigate('/events')} style={{ marginBottom: '10px' }} fullWidth>
+                            Back to Event List
                         </Button>
                     </Grid>
                 </Grid>
