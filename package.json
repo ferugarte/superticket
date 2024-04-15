@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/ferugarte/superticket#readme",
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "express": "^4.19.2"
   }
 }
