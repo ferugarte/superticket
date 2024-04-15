@@ -25,21 +25,20 @@ function TicketListByEvent() {
             }
         };
 
+        const deleteTicket = async (ticketId) => {
+            try {
+                await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`);
+                setTickets(tickets.filter(ticket => ticket._id !== ticketId));  // Update state to remove deleted ticket
+            } catch (error) {
+                console.error('Failed to delete ticket:', error);
+            }
+        };
+
         fetchTickets();
     }, [eventId]);
 
     const handleBackToEventDetails = () => {
         navigate(`/events/${eventId}`);
-    };
-
-    const deleteTicket = async (ticketId) => {
-        try {
-            console.log(`Deleting the ticket with id ${ticketId}`);
-            await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`);
-            setTickets(tickets.filter(ticket => ticket._id !== ticketId));  // Update state to remove deleted ticket
-        } catch (error) {
-            console.error('Failed to delete ticket:', error);
-        }
     };
 
     if (loading) return <Typography>Loading tickets...</Typography>;
@@ -58,9 +57,6 @@ function TicketListByEvent() {
                             primary={`Ticket ID: ${ticket._id}`}
                             secondary={`Customer Name: ${ticket.customer.name}, Zone: ${ticket.zone}`}
                         />
-                        <IconButton onClick={() => deleteTicket(ticket._id)} edge="end" aria-label="delete">
-                            <DeleteIcon />
-                        </IconButton>
                     </ListItem>
                 ))}
             </List>

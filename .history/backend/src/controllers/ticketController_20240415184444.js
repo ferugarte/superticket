@@ -71,7 +71,7 @@ async function sendMessage(data, customerName, eventName) {
 
 async function sendQRCode(ticket, whatsappNumber) {
     const qrCodePath = path.resolve(__dirname, `../temp/${ticket._id}.png`);
-    await QRCode.toFile(qrCodePath, `${ticket._id}`);
+    await QRCode.toFile(qrCodePath, `https://yourdomain.com/tickets/${ticket._id}`);
 
     const formData = new FormData();
     formData.append('number', whatsappNumber);
@@ -140,24 +140,6 @@ exports.verifyQRCode = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error while verifying QR code." });
-    }
-};
-
-exports.deleteTicket = async (req, res) => {
-    try {
-        console.log("Deleting the ticket");
-        const { ticketId } = req.params; // Assuming the ticket ID is passed as a URL parameter
-        const ticket = await Ticket.findById(ticketId);
-
-        if (!ticket) {
-            return res.status(404).json({ message: "Ticket not found." });
-        }
-
-        await Ticket.deleteOne({ _id: ticketId });
-        res.status(200).json({ message: "Ticket successfully deleted." });
-    } catch (error) {
-        console.error('Failed to delete ticket:', error);
-        res.status(500).json({ message: "Failed to delete ticket.", error: error });
     }
 };
 

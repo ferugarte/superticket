@@ -143,21 +143,3 @@ exports.verifyQRCode = async (req, res) => {
     }
 };
 
-exports.deleteTicket = async (req, res) => {
-    try {
-        console.log("Deleting the ticket");
-        const { ticketId } = req.params; // Assuming the ticket ID is passed as a URL parameter
-        const ticket = await Ticket.findById(ticketId);
-
-        if (!ticket) {
-            return res.status(404).json({ message: "Ticket not found." });
-        }
-
-        await Ticket.deleteOne({ _id: ticketId });
-        res.status(200).json({ message: "Ticket successfully deleted." });
-    } catch (error) {
-        console.error('Failed to delete ticket:', error);
-        res.status(500).json({ message: "Failed to delete ticket.", error: error });
-    }
-};
-

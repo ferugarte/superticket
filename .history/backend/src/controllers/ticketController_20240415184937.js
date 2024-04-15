@@ -145,7 +145,6 @@ exports.verifyQRCode = async (req, res) => {
 
 exports.deleteTicket = async (req, res) => {
     try {
-        console.log("Deleting the ticket");
         const { ticketId } = req.params; // Assuming the ticket ID is passed as a URL parameter
         const ticket = await Ticket.findById(ticketId);
 

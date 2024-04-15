@@ -37,7 +37,7 @@ exports.assignTicket = async (req, res) => {
         await sendMessage({
             number: customer.whatsappNumber
         }, customer.name, eventDetails.name); // Pass customer and event names
-        console.log(`Logró enviar. Ahora el QR`);
+
         // Generate and send QR code
         await sendQRCode(newTicket, customer.whatsappNumber);
 
@@ -53,25 +53,23 @@ exports.assignTicket = async (req, res) => {
 };
 
 async function sendMessage(data, customerName, eventName) {
-    console.log(`¡Hola ${customerName}!, Aquí está tu Ticket para el evento ${eventName}.\n\nPor favor, presentalo en la entrada del evento.\n\n¡Que disfrutes!`);
     const messageContent = {
         number: data.number,
-        body: `¡Hola ${customerName}!, Aquí está tu Ticket para el evento ${eventName}.\n\nPor favor, presentalo en la entrada del evento.\n\n¡Que disfrutes!`
+        body: `Hello ${customerName}, here is your ticket for ${eventName}!`
     };
     const config = {
         headers: {
-            'Authorization': 'JVIZHW8FG6OIGOEUF5OE',
+            'X_TOKEN': 'JVIZHW8FG6OIGOEUF5OE',
             'Content-Type': 'application/json'
         }
     };
-    console.log(messageContent);
     await axios.post('https://api.nissipro.net/api/messages/send', messageContent, config);
 }
 
 
 async function sendQRCode(ticket, whatsappNumber) {
     const qrCodePath = path.resolve(__dirname, `../temp/${ticket._id}.png`);
-    await QRCode.toFile(qrCodePath, `${ticket._id}`);
+    await QRCode.toFile(qrCodePath, `https://yourdomain.com/tickets/${ticket._id}`);
 
     const formData = new FormData();
     formData.append('number', whatsappNumber);
@@ -80,7 +78,7 @@ async function sendQRCode(ticket, whatsappNumber) {
     const config = {
         headers: {
             ...formData.getHeaders(),
-            'Authorization': 'JVIZHW8FG6OIGOEUF5OE'
+            'X_TOKEN': 'JVIZHW8FG6OIGOEUF5OE'
         }
     };
     await axios.post('https://api.nissipro.net/api/messages/send', formData, config);
@@ -140,24 +138,6 @@ exports.verifyQRCode = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error while verifying QR code." });
-    }
-};
-
-exports.deleteTicket = async (req, res) => {
-    try {
-        console.log("Deleting the ticket");
-        const { ticketId } = req.params; // Assuming the ticket ID is passed as a URL parameter
-        const ticket = await Ticket.findById(ticketId);
-
-        if (!ticket) {
-            return res.status(404).json({ message: "Ticket not found." });
-        }
-
-        await Ticket.deleteOne({ _id: ticketId });
-        res.status(200).json({ message: "Ticket successfully deleted." });
-    } catch (error) {
-        console.error('Failed to delete ticket:', error);
-        res.status(500).json({ message: "Failed to delete ticket.", error: error });
     }
 };
 
