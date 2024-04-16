@@ -14,7 +14,7 @@ function EventList() {
     };
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/events')
+        axios.get('https://superticket-backend.uc.r.appspot.com/api/events')
             .then(response => setEvents(response.data))
             .catch(error => console.error('Error fetching events:', error));
     }, []);
@@ -25,12 +25,12 @@ function EventList() {
             {events.map(event => (
                 <ListItem key={event._id}>
                     <ListItemText primary={event.name} />
-                    <Button component={Link} to={`/events/${event._id}`}>View Details</Button>
+                    <Button component={Link} to={`/events/${event._id}`}>Ver Detalles</Button>
                 </ListItem>
             ))}
         </List>        
         <Button variant="contained" color="primary" onClick={handleCreateNewEvent} fullWidth>
-                Create New Event
+                Crear Nuevo Evento
             </Button>
         </Container>
     );

@@ -9,7 +9,7 @@ function TicketVerification() {
 
     const verifyTicket = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/api/tickets/verify', { qrCode })
+        axios.post('https://superticket-backend.uc.r.appspot.com/api/tickets/verify', { qrCode })
             .then(response => setMessage(response.data.message))
             .catch(error => setMessage('Verification failed: ' + error.message));
     };

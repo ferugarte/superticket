@@ -13,7 +13,7 @@ function TicketList() {
 
     const fetchTickets = () => {
         setIsLoading(true);
-        axios.get('http://localhost:3000/api/tickets') // Make sure the URL matches your server's configuration
+        axios.get('https://superticket-backend.uc.r.appspot.com/api/tickets') // Make sure the URL matches your server's configuration
             .then(response => {
                 setTickets(response.data);
                 setIsLoading(false);

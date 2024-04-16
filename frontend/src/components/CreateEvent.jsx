@@ -49,7 +49,7 @@ function CreateEvent() {
             zones
         };
         
-        axios.post('http://localhost:3000/api/events', eventData)
+        axios.post('https://superticket-backend.uc.r.appspot.com/api/events', eventData)
             .then(() => alert('Event created successfully!'))
             .catch(error => alert('Error creating event:', error));
     };

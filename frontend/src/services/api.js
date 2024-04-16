@@ -1,7 +1,7 @@
 // src/services/api.js
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api';  // Adjust based on actual API URL
+const API_URL = 'https://superticket-backend.uc.r.appspot.com/api';  // Adjust based on actual API URL
 
 export const fetchEvents = () => axios.get(`${API_URL}/events`);
 export const fetchEventById = (id) => axios.get(`${API_URL}/events/${id}`);

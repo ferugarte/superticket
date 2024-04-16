@@ -17,7 +17,7 @@ function TicketListByEvent() {
 
     const fetchTickets = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/events/${eventId}/tickets`);
+            const response = await axios.get(`https://superticket-backend.uc.r.appspot.com/api/events/${eventId}/tickets`);
             setTickets(response.data);
             setLoading(false);
         } catch (error) {
@@ -28,7 +28,7 @@ function TicketListByEvent() {
 
     const deleteTicket = async (ticketId) => {
         try {
-            await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`);
+            await axios.delete(`https://superticket-backend.uc.r.appspot.com/api/tickets/${ticketId}`);
             setTickets(tickets.filter(ticket => ticket._id !== ticketId));
             setOpenSnackbar(true);  // Open the Snackbar upon successful deletion
         } catch (error) {
@@ -46,14 +46,14 @@ function TicketListByEvent() {
         <Container maxWidth="sm">
         <Paper style={{ padding: '20px', margin: '20px' }}>
             <Typography variant="h4" gutterBottom>
-                Tickets for the Event
+                Tickets de Evento
             </Typography>
             <List>
                 {tickets.map(ticket => (
                     <ListItem key={ticket._id} divider>
                         <ListItemText
                             primary={`Ticket ID: ${ticket._id}`}
-                            secondary={`Customer Name: ${ticket.customer.name}, Zone: ${ticket.zone}`}
+                            secondary={`Cliente: ${ticket.customer.name}, Zona: ${ticket.zone}`}
                         />
                         <IconButton onClick={() => deleteTicket(ticket._id)} edge="end" aria-label="delete">
                             <DeleteIcon />
@@ -68,11 +68,11 @@ function TicketListByEvent() {
                 style={{ marginTop: '20px' }}
                 fullWidth
             >
-                Back to Event Details
+                Volver al Detalle del Evento
             </Button>
             <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
                 <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-                    Ticket successfully deleted.
+                    Ticket borrado exitosamente.
                 </Alert>
             </Snackbar>
         </Paper>

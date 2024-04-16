@@ -14,7 +14,7 @@ function AssignTicket() {
 
     // Fetch event details including zones
     useEffect(() => {
-        axios.get(`http://localhost:3000/api/events/${id}`)
+        axios.get(`https://superticket-backend.uc.r.appspot.com/api/events/${id}`)
             .then(response => {
                 setEventZones(response.data.zones);
                 if (response.data.zones.length > 0) {
@@ -39,13 +39,13 @@ function AssignTicket() {
             qrCode: "-",
             isUsed: false
         };
-        axios.post('http://localhost:3000/api/tickets', ticketData)
+        axios.post('https://superticket-backend.uc.r.appspot.com/api/tickets', ticketData)
             .then(() => {
-                alert('Ticket assigned successfully!');
+                alert('¡Ticket asignado exitosamente!');
                 navigate('/');  // Redirect or handle post-submission logic
             })
             .catch(error => {
-                alert('Error assigning ticket:', error);
+                alert('Error al asignar el ticket:', error);
             });
     };
 
@@ -53,13 +53,13 @@ function AssignTicket() {
         <Container maxWidth="sm">
         <Paper style={{ padding: 20, margin: '20px' }}>
             <Typography variant="h5" component="h3" style={{ marginBottom: 20 }}>
-                Assign Ticket
+                Asignar Ticket
             </Typography>
             <form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <FormControl fullWidth required>
-                            <InputLabel id="zone-label">Zone</InputLabel>
+                            <InputLabel id="zone-label">Zona</InputLabel>
                             <Select
                                 labelId="zone-label"
                                 id="zone-select"
@@ -77,7 +77,7 @@ function AssignTicket() {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
-                            label="Customer Name"
+                            label="Nombre y Apellido"
                             value={customerName}
                             onChange={e => setCustomerName(e.target.value)}
                             fullWidth
@@ -86,7 +86,7 @@ function AssignTicket() {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
-                            label="Identity Number"
+                            label="Cédula de Identidad"
                             value={identityNumber}
                             onChange={e => setIdentityNumber(e.target.value)}
                             fullWidth
@@ -95,7 +95,7 @@ function AssignTicket() {
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
-                            label="WhatsApp Number"
+                            label="Número de WhatsApp"
                             value={whatsappNumber}
                             onChange={e => setWhatsappNumber(e.target.value)}
                             fullWidth
@@ -104,12 +104,12 @@ function AssignTicket() {
                     </Grid>
                     <Grid item xs={12}>
                         <Button type="submit" variant="contained" color="success" fullWidth>
-                            Assign Ticket
+                            Asignar Ticket
                         </Button>
                     </Grid>
                     <Grid item xs={12}>
                         <Button variant="contained" onClick={() => navigate(`/events/${id}`)} fullWidth>
-                            Back to Event Details
+                            Volver al Detalle del Evento
                         </Button>
                     </Grid>
                 </Grid>

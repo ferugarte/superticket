@@ -13,7 +13,7 @@ function EventDetail() {
     useEffect(() => {
         const fetchEventDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/events/${id}`);
+                const response = await axios.get(`https://superticket-backend.uc.r.appspot.com/api/events/${id}`);
                 setEvent(response.data);
                 setLoading(false);
             } catch (err) {
@@ -28,7 +28,7 @@ function EventDetail() {
 
     const deleteEvent = async () => {
         try {
-            await axios.delete(`http://localhost:3000/api/events/${id}`);
+            await axios.delete(`https://superticket-backend.uc.r.appspot.com/api/events/${id}`);
             navigate('/events'); // Redirect to the list of events after deletion
         } catch (error) {
             console.error('Failed to delete the event:', error);
@@ -72,17 +72,17 @@ function EventDetail() {
             </List>
             <Grid item xs={12}>
                 <Button variant="contained" color="success" onClick={() => navigate(`/events/${id}/assign-ticket`)} style={{ marginBottom: '10px' }} fullWidth>
-                    Assign Ticket
+                    Asignar Ticket
                 </Button>
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" onClick={() => navigate('/events')} style={{ marginBottom: '10px' }} fullWidth>
-                    Back to Event List
+                    Volver a la Lista de Eventos
                 </Button>
             </Grid>
             <Grid item xs={12}>
                 <Button variant="contained" color="primary" onClick={() => navigate(`/events/${id}/tickets`)} style={{ marginBottom: '10px' }} fullWidth>
-                    View Tickets
+                    Ver Tickets
                 </Button>
             </Grid>
             <Grid item xs={12} >
@@ -93,7 +93,7 @@ function EventDetail() {
                     style={{ marginTop: '20px' }}
                     fullWidth
                 >
-                    Delete Event
+                    Borrar Evento
                 </Button>
             </Grid>
         </Paper>
