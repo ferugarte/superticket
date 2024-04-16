@@ -1,7 +1,7 @@
 // src/components/VerifyTicket.jsx
 import React, { useState } from 'react';
 import { verifyTicket } from '../services/api';
-import { TextField, Button, Paper, Typography, Container } from '@material-ui/core';
+import { TextField, Button, Paper, Typography, Container } from '@mui/material';
 
 function VerifyTicket() {
     const [qrCode, setQrCode] = useState('');
