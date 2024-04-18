@@ -80,10 +80,10 @@ async function sendQRCode(ticket, whatsappNumber) {
     const config = {
         headers: {
             ...formData.getHeaders(),
-            'Authorization': 'JVIZHW8FG6OIGOEUF5OE'
+            'Authorization': '-token-'
         }
     };
-    await axios.post('https://api.nissipro.net/api/messages/send', formData, config);
+    await axios.post('-url-', formData, config);
     fs.unlinkSync(qrCodePath);
 }
 
