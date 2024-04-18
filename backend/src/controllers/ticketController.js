@@ -60,12 +60,12 @@ async function sendMessage(data, customerName, eventName) {
     };
     const config = {
         headers: {
-            'Authorization': 'JVIZHW8FG6OIGOEUF5OE',
+            'Authorization': '-token-',
             'Content-Type': 'application/json'
         }
     };
     console.log(messageContent);
-    await axios.post('https://api.nissipro.net/api/messages/send', messageContent, config);
+    await axios.post('-url-', messageContent, config);
 }
 
 
